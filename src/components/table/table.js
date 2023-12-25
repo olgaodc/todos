@@ -3,10 +3,12 @@ import Container from '../container/container';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import Pagination from 'react-bootstrap/Pagination';
+import Spinner from 'react-bootstrap/Spinner';
 import styles from './table.module.css';
 
 const ItemsTable = ({ inputText }) => {
   const [todos, setTodods] = useState([]);
+  const [isLoaded, setLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(20);
 
@@ -16,12 +18,14 @@ const ItemsTable = ({ inputText }) => {
         const response = await axios.get('https://jsonplaceholder.typicode.com/todos');
         const data = response.data;
 
-        const filteredTodos = data.filter(item => item.title.includes(inputText));
+        const filteredTodos = data.filter(item => item.title.includes(inputText.toLowerCase()));
 
         setTodods(filteredTodos);
         setCurrentPage(1);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoaded(true);
       }
     }
 
@@ -41,34 +45,38 @@ const ItemsTable = ({ inputText }) => {
     );
   }
 
-
   return (
     <Container>
-      {todos.length > 0 ? (
-        <Table striped bordered>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Completed</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentTodos.map(item => (
-              <tr key={item.id} todos={currentTodos}>
-                <td>{item.id}</td>
-                <td>{item.title}</td>
-                <td>{item.completed ? '✔' : '❌'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+      {isLoaded ? (
+        todos.length > 0 ? (
+          <>
+            <Table striped bordered>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Completed</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentTodos.map(item => (
+                  <tr key={item.id} todos={currentTodos}>
+                    <td>{item.id}</td>
+                    <td>{item.title}</td>
+                    <td>{item.completed ? '✔' : '❌'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <Pagination className={styles.pagination}>{pageNumbers}</Pagination>
+          </>
+        ) : (<div className={styles.nodata}>No data</div>)
       ) : (
-        <div className={styles.nodata}>No data</div>
+        <div className={styles.spinnerWrpper}>
+          <Spinner animation="border" />
+        </div>
       )
       }
-
-      <Pagination className={styles.pagination}>{pageNumbers}</Pagination>
     </Container>
   )
 }
