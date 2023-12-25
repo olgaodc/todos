@@ -3,4 +3,52 @@
 }
 body {
   margin: 0;
+  /* background-color: rgb(219, 213, 226) !important; */
+}
+
+.mb-3.input-group {
+  display: flex;
+  justify-content: center;
+}
+
+.mb-3.input-group input.form-control {
+  border: 0;
+  max-width: 600px;
+}
+
+.mb-3.input-group input.form-control:focus {
+  box-shadow: none;
+}
+
+.mb-3 button.btn, .mb-3 button.btn:active  {
+  background-color: rgb(159, 84, 230);
+  border: 1px solid rgb(159, 84, 230);
+  color: #fff;
+}
+
+.mb-3 button.btn, .mb-3 button.btn:focus-visible {
+  box-shadow: none;
+}
+
+.mb-3 button.btn:hover {
+  background-color: rgb(142, 57, 221);
+  border: 1px solid rgb(142, 57, 221);
+}
+
+.page-item .page-link {
+  color: rgb(159, 84, 230);
+}
+
+.page-item .page-link:not(.page-item.active .page-link):hover {
+  opacity: 0.8;
+  color: rgb(159, 84, 230);
+}
+
+.page-item.active .page-link:focus {
+  box-shadow: none;
+}
+
+.page-item.active .page-link {
+  background-color: rgb(159, 84, 230);
+  border: 1px solid rgb(159, 84, 230);
 }
