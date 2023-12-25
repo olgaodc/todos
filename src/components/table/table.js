@@ -48,8 +48,7 @@ const ItemsTable = ({ inputText }) => {
         <Table striped bordered>
           <thead>
             <tr>
-              <th>User Id</th>
-              <th>Id</th>
+              <th>#</th>
               <th>Title</th>
               <th>Completed</th>
             </tr>
@@ -57,7 +56,6 @@ const ItemsTable = ({ inputText }) => {
           <tbody>
             {currentTodos.map(item => (
               <tr key={item.id} todos={currentTodos}>
-                <td>{item.userId}</td>
                 <td>{item.id}</td>
                 <td>{item.title}</td>
                 <td>{item.completed ? '✔' : '❌'}</td>
